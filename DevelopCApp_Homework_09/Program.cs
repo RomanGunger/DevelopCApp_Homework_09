@@ -9,6 +9,7 @@ namespace DevelopCApp_Homework_09
 		static void Main()
 		{
             var person = new Person("Tom", 37, new string[] { "324", "fff" });
+
             //var person1 = new AnotherPerson("fffff", 43, new string[] { "324", "fff" });
 
             //Group persons = new Group { People = new Person[] { person, person1 } };
@@ -40,21 +41,32 @@ namespace DevelopCApp_Homework_09
 
             //using (FileStream fs = new FileStream("person.json", FileMode.OpenOrCreate))
             //{
-            //    JsonSerializer.Serialize(fs ,person);
+            //    JsonSerializer.Serialize(fs, person);
+            //    //JsonDocument jd = JsonSerializer.SerializeToDocument(person);
             //}
 
-            using (FileStream fj = new FileStream("person.json", FileMode.OpenOrCreate))
+            //using (FileStream fj = new FileStream("person.json", FileMode.OpenOrCreate))
+            //{
+            //    Person? pers = JsonSerializer.Deserialize<Person>(fj);
+
+            //    using (FileStream fx = new FileStream("person.xml", FileMode.OpenOrCreate))
+            //    {
+            //        XmlSerializer xmlSerializer1 = new XmlSerializer(typeof(Person));
+
+            //        xmlSerializer1.Serialize(fx, pers);
+            //    }
+
+            //    Console.WriteLine("Object has been serialized");
+            //}
+
+            JsonDocument jd = JsonSerializer.SerializeToDocument(person);
+            Person? pers = JsonSerializer.Deserialize<Person>(jd);
+
+            using (FileStream fx = new FileStream("person.xml", FileMode.OpenOrCreate))
             {
-                Person? pers = JsonSerializer.Deserialize<Person>(fj);
+                XmlSerializer xmlSerializer1 = new XmlSerializer(typeof(Person));
 
-                using (FileStream fx = new FileStream("person.xml", FileMode.OpenOrCreate))
-                {
-                    XmlSerializer xmlSerializer1 = new XmlSerializer(typeof(Person));
-
-                    xmlSerializer1.Serialize(fx, pers);
-                }
-
-                Console.WriteLine("Object has been serialized");
+                xmlSerializer1.Serialize(fx, pers);
             }
         }
 	}
